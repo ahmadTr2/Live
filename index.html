@@ -36,13 +36,6 @@
       height: 100%;
       border: 0;
     }
-
-    .offline-message {
-      font-size: 18px;
-      margin-top: 30px;
-      opacity: 0.9;
-      color: #ffcc00;
-    }
   </style>
 </head>
 <body>
@@ -50,55 +43,13 @@
   <h1>⚽ Family Football Live</h1>
   <p>Friendly matches – live for family & cousins</p>
 
-  <div class="video-container" id="twitch-container">
-    <!-- Twitch iframe will be inserted here dynamically -->
+  <div class="video-container">
+    <!-- Twitch Embed -->
+    <iframe
+      src="https://player.twitch.tv/?channel=topson&parent=ahmadtr2.github.io&autoplay=false"
+      allowfullscreen>
+    </iframe>
   </div>
-
-  <div class="offline-message" id="offline-message">
-    Stream is currently offline. Check back during the match!
-  </div>
-
-  <script>
-    const twitchChannel = "topson"; // your Twitch channel
-    const parentDomain = "ahmadtr2.github.io"; // your GitHub Pages domain
-
-    async function checkTwitchLive() {
-      try {
-        // Twitch API endpoint for streams
-        const response = await fetch(`https://api.twitch.tv/helix/streams?user_login=${twitchChannel}`, {
-          headers: {
-            "Client-ID": "kimne78kx3ncx6brgo4mv6wki5h1ko", // public demo client ID for embeds
-            "Authorization": "Bearer " // empty token needed only for public demo
-          }
-        });
-        const data = await response.json();
-
-        const container = document.getElementById("twitch-container");
-        const offlineMessage = document.getElementById("offline-message");
-
-        if (data.data && data.data.length > 0 && data.data[0].type === "live") {
-          // Stream is live
-          container.innerHTML = `
-            <iframe
-              src="https://player.twitch.tv/?channel=${twitchChannel}&parent=${parentDomain}&autoplay=false"
-              allowfullscreen>
-            </iframe>
-          `;
-          offlineMessage.style.display = "none";
-        } else {
-          // Stream offline
-          container.innerHTML = "";
-          offlineMessage.style.display = "block";
-        }
-      } catch (err) {
-        console.error("Error checking Twitch stream:", err);
-      }
-    }
-
-    // Check immediately and every 60 seconds
-    checkTwitchLive();
-    setInterval(checkTwitchLive, 60000);
-  </script>
 
 </body>
 </html>
