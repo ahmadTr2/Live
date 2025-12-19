@@ -4,28 +4,80 @@
   <meta charset="UTF-8">
   <title>Family Football Live</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
+    /* --- Reset & Base Styles --- */
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 20px;
-      background-color: #0b6623;
-      color: white;
-      font-family: Arial, Helvetica, sans-serif;
-      text-align: center;
+      padding: 0;
     }
 
-    h1 { margin-bottom: 5px; }
-    p { margin-top: 0; opacity: 0.9; }
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow-x: hidden;
+      background: linear-gradient(-45deg, #0b6623, #1e8449, #0f9d58, #34a853, #1abc9c, #16a085);
+      background-size: 1200% 1200%;
+      animation: gradientBG 30s ease infinite;
+      color: #fff;
+    }
 
+    /* --- Floating particles --- */
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0.3; }
+      50% { transform: translateY(-300px) translateX(50px) scale(1); opacity: 0.6; }
+      100% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0.3; }
+    }
+
+    /* --- Heading & Paragraph --- */
+    h1 {
+      font-size: 3rem;
+      margin: 20px 0 5px;
+      text-shadow: 3px 3px 15px rgba(0,0,0,0.7);
+      animation: fadeInDown 1s ease-out;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+      animation: fadeIn 2s ease-out;
+    }
+
+    /* --- Video Container --- */
     .video-container {
       position: relative;
+      width: 90%;
+      max-width: 1200px;
       padding-bottom: 56.25%; /* 16:9 ratio */
-      height: 0;
-      max-width: 900px;
-      margin: 20px auto;
-      background: black;
-      border-radius: 10px;
+      border-radius: 20px;
       overflow: hidden;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.7), 0 0 50px rgba(255,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: zoomIn 1.2s ease-out;
+      margin-bottom: 40px;
+    }
+
+    .video-container:hover {
+      transform: scale(1.03);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 60px rgba(255,0,0,0.4);
     }
 
     iframe {
@@ -34,7 +86,65 @@
       left: 0;
       width: 100%;
       height: 100%;
-      border: 0;
+      border: none;
+      border-radius: 20px;
+    }
+
+    /* --- LIVE Badge --- */
+    .live-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: red;
+      color: #fff;
+      font-weight: bold;
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-size: 1rem;
+      box-shadow: 0 0 15px rgba(255,0,0,0.7);
+      animation: pulse 1.5s infinite;
+      z-index: 2;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2rem; }
+      p { font-size: 1rem; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8rem; }
+      p { font-size: 0.9rem; }
+    }
+
+    /* --- Animations --- */
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      25% {background-position: 50% 100%;}
+      50% {background-position: 100% 50%;}
+      75% {background-position: 50% 0%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 5px rgba(255,0,0,0.7); transform: scale(1); }
+      50% { box-shadow: 0 0 20px rgba(255,0,0,1); transform: scale(1.05); }
+      100% { box-shadow: 0 0 5px rgba(255,0,0,0.7); transform: scale(1); }
     }
   </style>
 </head>
@@ -44,12 +154,28 @@
   <p>Friendly matches – live for family & cousins</p>
 
   <div class="video-container">
-    <!-- Twitch Embed -->
+    <div class="live-badge">LIVE</div>
     <iframe
       src="https://player.twitch.tv/?channel=topson&parent=ahmadtr2.github.io&autoplay=false"
       allowfullscreen>
     </iframe>
   </div>
+
+  <!-- Particles -->
+  <script>
+    // Generate floating particles
+    const body = document.body;
+    for(let i=0; i<50; i++){
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.top = Math.random() * 100 + 'vh';
+      particle.style.width = Math.random()*6 + 4 + 'px';
+      particle.style.height = particle.style.width;
+      particle.style.animationDuration = 10 + Math.random()*20 + 's';
+      body.appendChild(particle);
+    }
+  </script>
 
 </body>
 </html>
