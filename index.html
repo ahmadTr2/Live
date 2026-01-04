@@ -2,179 +2,87 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Family Football Live</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
+  <title>Live Stream</title>
   <style>
-    /* --- Reset & Base Styles --- */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
-      text-align: center;
-      overflow-x: hidden;
-      background: linear-gradient(-45deg, #0b6623, #1e8449, #0f9d58, #34a853, #1abc9c, #16a085);
-      background-size: 1200% 1200%;
-      animation: gradientBG 30s ease infinite;
-      color: #fff;
     }
 
-    /* --- Floating particles --- */
-    .particle {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 50%;
-      animation: floatParticle linear infinite;
-    }
-
-    @keyframes floatParticle {
-      0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0.3; }
-      50% { transform: translateY(-300px) translateX(50px) scale(1); opacity: 0.6; }
-      100% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0.3; }
-    }
-
-    /* --- Heading & Paragraph --- */
     h1 {
-      font-size: 3rem;
-      margin: 20px 0 5px;
-      text-shadow: 3px 3px 15px rgba(0,0,0,0.7);
-      animation: fadeInDown 1s ease-out;
+      margin: 20px 0;
     }
 
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      opacity: 0.9;
-      animation: fadeIn 2s ease-out;
-    }
-
-    /* --- Video Container --- */
-    .video-container {
+    .stream-container {
       position: relative;
-      width: 90%;
+      width: 80%;
       max-width: 1200px;
-      padding-bottom: 56.25%; /* 16:9 ratio */
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.7), 0 0 50px rgba(255,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      animation: zoomIn 1.2s ease-out;
-      margin-bottom: 40px;
-    }
-
-    .video-container:hover {
-      transform: scale(1.03);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 60px rgba(255,0,0,0.4);
+      aspect-ratio: 16/9;
+      margin-bottom: 20px;
     }
 
     iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       border: none;
-      border-radius: 20px;
+      background: #000;
     }
 
-    /* --- LIVE Badge --- */
-    .live-badge {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      background: red;
-      color: #fff;
-      font-weight: bold;
-      padding: 5px 12px;
-      border-radius: 5px;
-      font-size: 1rem;
-      box-shadow: 0 0 15px rgba(255,0,0,0.7);
-      animation: pulse 1.5s infinite;
-      z-index: 2;
+    .offline-message {
+      background: #222;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.2rem;
+      width: 80%;
+      max-width: 600px;
+      display: none; /* hidden by default */
     }
 
-    /* --- Responsive --- */
-    @media (max-width: 768px) {
-      h1 { font-size: 2.2rem; }
-      p { font-size: 1rem; }
-    }
-
-    @media (max-width: 480px) {
-      h1 { font-size: 1.8rem; }
-      p { font-size: 0.9rem; }
-    }
-
-    /* --- Animations --- */
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      25% {background-position: 50% 100%;}
-      50% {background-position: 100% 50%;}
-      75% {background-position: 50% 0%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    @keyframes fadeInDown {
-      0% { opacity: 0; transform: translateY(-30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-
-    @keyframes zoomIn {
-      0% { transform: scale(0.8); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 5px rgba(255,0,0,0.7); transform: scale(1); }
-      50% { box-shadow: 0 0 20px rgba(255,0,0,1); transform: scale(1.05); }
-      100% { box-shadow: 0 0 5px rgba(255,0,0,0.7); transform: scale(1); }
+    .offline-message a {
+      color: #1e90ff;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
 
-  <h1>⚽ Family Football Live</h1>
-  <p>Friendly matches – live for family & cousins</p>
+  <h1>🔴 Live Stream</h1>
 
-  <div class="video-container">
-    <div class="live-badge">LIVE</div>
+  <!-- Live Stream Embed -->
+  <div class="stream-container">
     <iframe
-      src="https://player.twitch.tv/?channel=topson&parent=ahmadtr2.github.io&autoplay=false"
+      src="https://www.youtube.com/embed/live_stream?channel=UCYzm6ZhK2oMt4dvBg6MqjGQ&autoplay=1"
+      allow="autoplay; encrypted-media; picture-in-picture"
       allowfullscreen>
     </iframe>
   </div>
 
-  <!-- Particles -->
+  <!-- Offline Message -->
+  <div class="offline-message">
+    ❌ We are currently offline.<br>
+    Visit our <a href="https://www.youtube.com/@%D8%AA%D8%AC%D9%85%D8%B9%D8%B4%D8%A8%D8%A7%D8%A8%D8%B7%D9%84%D9%88%D8%B3%D8%A9%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D9%8A%D9%84%D9%83%D8%B1%D8%A9%D8%A7%D9%84%D9%82%D8%AF%D9%85" target="_blank">YouTube Channel</a> for updates.
+  </div>
+
   <script>
-    // Generate floating particles
-    const body = document.body;
-    for(let i=0; i<50; i++){
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
-      particle.style.left = Math.random() * 100 + 'vw';
-      particle.style.top = Math.random() * 100 + 'vh';
-      particle.style.width = Math.random()*6 + 4 + 'px';
-      particle.style.height = particle.style.width;
-      particle.style.animationDuration = 10 + Math.random()*20 + 's';
-      body.appendChild(particle);
-    }
+    // Safe approach: just show the offline message after a delay
+    // You cannot access the iframe directly due to cross-origin restrictions
+    // This simply gives your viewers a nicer offline screen if you are not live
+
+    setTimeout(() => {
+      // Show offline message after 2 seconds
+      // Users can still see the YouTube "offline" player inside the iframe
+      const offlineMessage = document.querySelector('.offline-message');
+      offlineMessage.style.display = 'block';
+    }, 2000);
   </script>
 
 </body>
